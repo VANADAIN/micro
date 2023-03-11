@@ -58,7 +58,10 @@ func main() {
 
 	// start and register rpc server
 	err = rpc.Register(new(RPCServer))
+
 	go app.rpcListen()
+
+	go app.gRPCListen()
 
 	srv := &http.Server{
 		Addr:    fmt.Sprintf(":%s", webPort),
@@ -88,6 +91,8 @@ func (app *Config) rpcListen() error {
 		go rpc.ServeConn(rpcConn)
 	}
 }
+
+
 
 func connectToMongo() (*mongo.Client, error) {
 	// create connection options
